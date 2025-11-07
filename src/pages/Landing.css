@@ -1,0 +1,225 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+  min-width: 100vw;
+  background: none;
+}
+
+#root,
+.container {
+  min-height: 100vh;
+  min-width: 100vw;
+  height: 100dvh;
+  width: 100vw;
+}
+
+.container {
+  position: relative;
+  width: 100vw;
+  min-height: 100dvh;
+  height: 100dvh;
+  background: linear-gradient(165.32deg, #17152d 38.13%, #532bdc 101.5%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow: hidden;
+}
+
+.container::before {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(165.32deg, #17152d 38.13%, #532bdc 101.5%);
+  background:
+    linear-gradient(165.32deg, #17152d 38.13%, #532bdc 101.5%),
+    radial-gradient(
+      circle at 30% 50%,
+      rgba(83, 43, 220, 0.4) 0%,
+      transparent 70%
+    );
+  background-blend-mode: normal;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 1440px;
+  width: 100%;
+}
+
+.title {
+  font-weight: 700;
+  font-size: clamp(48px, 10vw, 180px);
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  margin-bottom: 60px;
+  animation: fadeInUp 1s ease-out;
+  position: relative;
+  color: transparent;
+  user-select: none;
+  isolation: isolate;
+}
+
+.title::before {
+  content: "Awesome\AHackathon";
+  white-space: pre;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("lucas-marcomini.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+.title::after {
+  content: "Awesome\AHackathon";
+  white-space: pre;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #8f4edd 70%, #532bdc 100%),
+    url("lucas-marcomini.jpg");
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-blend-mode: color;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.description {
+  font-weight: 700;
+  font-size: clamp(20px, 3vw, 48px);
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  margin-bottom: 60px;
+  animation: fadeInUp 1.2s ease-out;
+}
+
+.description-normal {
+  color: #f9dada;
+}
+
+.description-gradient {
+  background: linear-gradient(180deg, #f9dada 69.71%, #938181 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.explore-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 20px 40px;
+  background: linear-gradient(90deg, #532bdc 0%, #7c5fe0 100%);
+  border-radius: 32px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  animation: fadeInUp 1.4s ease-out;
+  box-shadow: 0 10px 30px rgba(83, 43, 220, 0.3);
+}
+
+.explore-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(83, 43, 220, 0.5);
+}
+
+.explore-btn:active {
+  transform: translateY(-1px);
+}
+
+.explore-text {
+  font-weight: 700;
+  font-size: clamp(28px, 2.5vw, 40px);
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, #f9dada 0%, #d4caca 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arrow {
+  width: 33px;
+  height: 33px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background: linear-gradient(180deg, #f9dada 0%, #d4caca 100%);
+  transform: rotate(90deg);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    margin-bottom: 40px;
+    font-size: clamp(32px, 12vw, 72px);
+  }
+
+  .description {
+    margin-bottom: 40px;
+    padding: 0 20px;
+    font-size: clamp(16px, 5vw, 28px);
+  }
+
+  .explore-btn {
+    padding: 15px 30px;
+    gap: 10px;
+  }
+
+  .arrow {
+    width: 24px;
+    height: 24px;
+  }
+}
