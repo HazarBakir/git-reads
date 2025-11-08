@@ -149,26 +149,12 @@ body {
   animation: letterFlyIn 1s cubic-bezier(.54,.06,.39,1.19) forwards;
 }
 
-.description-gradient span:nth-child(1) { animation-delay: 0s; }
-.description-gradient span:nth-child(2) { animation-delay: 0.05s; }
-.description-gradient span:nth-child(3) { animation-delay: 0.10s; }
-.description-gradient span:nth-child(4) { animation-delay: 0.15s; }
-.description-gradient span:nth-child(5) { animation-delay: 0.20s; }
-.description-gradient span:nth-child(6) { animation-delay: 0.25s; }
-.description-gradient span:nth-child(7) { animation-delay: 0.30s; }
-.description-gradient span:nth-child(8) { animation-delay: 0.35s; }
-.description-gradient span:nth-child(9) { animation-delay: 0.40s; }
-.description-gradient span:nth-child(10) { animation-delay: 0.45s; }
-.description-gradient span:nth-child(11) { animation-delay: 0.50s; }
-.description-gradient span:nth-child(12) { animation-delay: 0.55s; }
-.description-gradient span:nth-child(13) { animation-delay: 0.60s; }
-.description-gradient span:nth-child(14) { animation-delay: 0.65s; }
-.description-gradient span:nth-child(15) { animation-delay: 0.70s; }
-.description-gradient span:nth-child(16) { animation-delay: 0.75s; }
-.description-gradient span:nth-child(17) { animation-delay: 0.80s; }
-.description-gradient span:nth-child(18) { animation-delay: 0.85s; }
-.description-gradient span:nth-child(19) { animation-delay: 0.90s; }
-.description-gradient span:nth-child(20) { animation-delay: 0.95s; }
+.description-gradient span:nth-child(n) {
+  animation-delay: calc((var(--i) - 1) * 0.05s);
+}
+.description-gradient span:nth-child(n) {
+  --i: n;
+}
 
 @keyframes letterFlyIn {
   0% {
