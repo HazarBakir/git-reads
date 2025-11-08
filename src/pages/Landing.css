@@ -1,44 +1,44 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
+/* Reset & Base styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,
-body {
-  height: 100%;
+html, body {
   width: 100%;
+  height: 100%;
 }
 
 body {
   font-family: "Inter", sans-serif;
   overflow-x: hidden;
-  min-height: 100vh;
   min-width: 100vw;
+  min-height: 100vh;
   background: none;
 }
 
 #root,
 .container {
-  min-height: 100vh;
-  min-width: 100vw;
-  height: 100dvh;
   width: 100vw;
+  height: 100dvh;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 
 .container {
   position: relative;
-  width: 100vw;
-  min-height: 100dvh;
-  height: 100dvh;
-  background: linear-gradient(165.32deg, #17152d 38.13%, #532bdc 101.5%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100dvh;
   padding: 40px 20px;
+  background: linear-gradient(165.32deg, #17152d 38.13%, #532bdc 101.5%);
   overflow: hidden;
 }
 
@@ -46,18 +46,12 @@ body {
   content: "";
   position: fixed;
   z-index: 0;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(165.32deg, #17152d 38.13%, #532bdc 101.5%);
   background:
     linear-gradient(165.32deg, #17152d 38.13%, #532bdc 101.5%),
-    radial-gradient(
-      circle at 30% 50%,
-      rgba(83, 43, 220, 0.4) 0%,
-      transparent 70%
-    );
+    radial-gradient(circle at 30% 50%, rgba(83,43,220,0.4) 0%, transparent 70%);
   background-blend-mode: normal;
   opacity: 1;
   pointer-events: none;
@@ -71,28 +65,34 @@ body {
   width: 100%;
 }
 
+/* Title Styles */
 .title {
+  position: relative;
   font-weight: 700;
   font-size: clamp(48px, 10vw, 180px);
   line-height: 1.2;
   letter-spacing: -0.04em;
   margin-bottom: 60px;
   animation: fadeInUp 1s ease-out;
-  position: relative;
   color: transparent;
   user-select: none;
   isolation: isolate;
 }
 
-.title::before {
+.title::before,
+.title::after {
   content: "Awesome\AHackathon";
   white-space: pre;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("lucas-marcomini.jpg");
+  z-index: 2;
+  pointer-events: none;
+}
+
+.title::before {
+  background-image: url("/public/lucas-marcomini.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -100,21 +100,12 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
-  z-index: 2;
-
-  pointer-events: none;
 }
 
 .title::after {
-  content: "Awesome\AHackathon";
-  white-space: pre;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(180deg, #8f4edd 70%, #532bdc 100%),
-    url("lucas-marcomini.jpg");
+  background:
+    linear-gradient(180deg, #8f4edd 70%, #532bdc 100%),
+    url("/public/lucas-marcomini.jpg");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -123,10 +114,9 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
-  z-index: 2;
-  pointer-events: none;
 }
 
+/* Description Styles */
 .description {
   font-weight: 700;
   font-size: clamp(20px, 3vw, 48px);
@@ -140,13 +130,106 @@ body {
   color: #f9dada;
 }
 
+/* Gradient effect for highlighted description text */
 .description-gradient {
-  background: linear-gradient(180deg, #f9dada 69.71%, #938181 100%);
+  position: relative;
+  font-weight: 700;
+  display: inline-block;
+  color: #f9dada;
+  background: none;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  user-select: none;
+  isolation: isolate;
+  animation: fadeInLettersGlobal 1.2s cubic-bezier(.64,.09,.38,1.03) both;
 }
 
+.description-gradient span {
+  display: inline-block;
+  color: #f9dada;
+  opacity: 0;
+  transform: translateY(60%) rotate(-10deg) scale(0.8);
+  animation: letterFlyIn 1s cubic-bezier(.54,.06,.39,1.19) forwards;
+}
+
+/* Animated delay for each letter */
+/* 
+ * Removed invalid SCSS @for loop.
+ * The required repeated CSS rules are written out explicitly below.
+ */
+.description-gradient span:nth-child(1) { animation-delay: 0s; }
+.description-gradient span:nth-child(2) { animation-delay: 0.05s; }
+.description-gradient span:nth-child(3) { animation-delay: 0.10s; }
+.description-gradient span:nth-child(4) { animation-delay: 0.15s; }
+.description-gradient span:nth-child(5) { animation-delay: 0.20s; }
+.description-gradient span:nth-child(6) { animation-delay: 0.25s; }
+.description-gradient span:nth-child(7) { animation-delay: 0.30s; }
+.description-gradient span:nth-child(8) { animation-delay: 0.35s; }
+.description-gradient span:nth-child(9) { animation-delay: 0.40s; }
+.description-gradient span:nth-child(10) { animation-delay: 0.45s; }
+.description-gradient span:nth-child(11) { animation-delay: 0.50s; }
+.description-gradient span:nth-child(12) { animation-delay: 0.55s; }
+.description-gradient span:nth-child(13) { animation-delay: 0.60s; }
+.description-gradient span:nth-child(14) { animation-delay: 0.65s; }
+.description-gradient span:nth-child(15) { animation-delay: 0.70s; }
+.description-gradient span:nth-child(16) { animation-delay: 0.75s; }
+.description-gradient span:nth-child(17) { animation-delay: 0.80s; }
+.description-gradient span:nth-child(18) { animation-delay: 0.85s; }
+.description-gradient span:nth-child(19) { animation-delay: 0.90s; }
+.description-gradient span:nth-child(20) { animation-delay: 0.95s; }
+
+/* Letter animation keyframes */
+@keyframes letterFlyIn {
+  0% {
+    opacity: 0;
+    transform: translateY(60%) rotate(-10deg) scale(0.8);
+    filter: blur(6px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-12%) rotate(4deg) scale(1.04);
+    filter: blur(1.5px);
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(3%) rotate(-2deg) scale(0.97);
+    filter: blur(0.5px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: blur(0px);
+  }
+}
+
+/* Fade/blur animation for letters */
+@keyframes fadeInLettersGlobal {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    letter-spacing: 0.12em;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0px);
+    letter-spacing: normal;
+    transform: none;
+  }
+}
+
+/* Fallback if inline spans are missing */
+.description-gradient:not(:empty):not(:has(span)) {
+  color: #fbeaed;
+  text-shadow: 0 0 4px #f9dada88;
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+}
+
+/* Explore Button Styles */
 .explore-btn {
   display: inline-flex;
   align-items: center;
@@ -190,6 +273,7 @@ body {
   transform: rotate(90deg);
 }
 
+/* Fade in up animation */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -201,23 +285,21 @@ body {
   }
 }
 
+/* Responsive Styles */
 @media (max-width: 768px) {
   .title {
     margin-bottom: 40px;
     font-size: clamp(32px, 12vw, 72px);
   }
-
   .description {
     margin-bottom: 40px;
     padding: 0 20px;
     font-size: clamp(16px, 5vw, 28px);
   }
-
   .explore-btn {
     padding: 15px 30px;
     gap: 10px;
   }
-
   .arrow {
     width: 24px;
     height: 24px;
