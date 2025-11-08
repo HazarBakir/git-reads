@@ -233,7 +233,7 @@ body {
 
 .explore-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(83, 43, 220, 0.5);
+  box-shadow: 0px 5px 100px rgba(97, 86, 133, 0.336);
 }
 
 .explore-btn:active {
