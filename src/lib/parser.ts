@@ -1,6 +1,6 @@
 // Parser to process README content fetched from GitHub API
 // This code processes the base64 README from GitHub, decodes it, and parses out headings (title/sections) and their descriptions.
-// I preferred to keep the comment lines, parser codes are not easy to read IMO, so adding comment lines would not hurt anybody, yeah? : )
+// I prefer to keep the comment lines, parser codes are not easy to read IMO, so adding comment lines would not hurt anybody, yeah? : )
 export interface ReadmeSection {
   heading: string;
   description: string;
