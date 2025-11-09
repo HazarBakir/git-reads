@@ -8,26 +8,28 @@ export default function Landing() {
   }, []);
 
   return (
-    <div className="container">
-      <div className="content">
-        <h1 className="title">
-          Awesome
-          <br />
-          Hackathon
-        </h1>
+    <>
+      <div className="container">
+        <div className="content">
+          <h1 className="title">
+            Awesome
+            <br />
+            Hackathon
+          </h1>
 
-        <p className="description">
-          <span className="description-normal">
-            Everything you need for the{" "}
-          </span>
-          <span className="description-gradient">Awesome Hackathon</span>
-        </p>
+          <p className="description">
+            <span className="description-normal">
+              Everything you need for the{" "}
+            </span>
+            <span className="description-gradient">Awesome Hackathon</span>
+          </p>
 
-        <a href="/document" className="explore-btn">
-          <span className="explore-text">Explore</span>
-          <div className="arrow"></div>
-        </a>
+          <a href="/document" className="explore-btn">
+            <span className="explore-text">Explore</span>
+            <div className="arrow"></div>
+          </a>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
