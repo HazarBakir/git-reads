@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import "./Landing.css";
-import { FetchReadme } from "../lib/github";
+import { FetchReadme } from "../../lib/github";
 
 export default function Landing() {
   useEffect(() => {
