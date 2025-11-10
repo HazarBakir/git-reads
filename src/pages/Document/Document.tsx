@@ -1,121 +1,11 @@
 import { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkEmoji from "remark-emoji";
 import type { TOCItem } from "../../lib/parser";
 import { FetchReadme } from "../../lib/github";
 import { parseTOC } from "../../lib/parser";
 import "./Document.css";
+import { DocumentContent } from "../../components/Document/DocumentContent";
+import { DocumentTOC } from "../../components/Document/DocumentTOC";
 
-
-// =======================
-// Utility: generateHeadingId
-// =======================
-function generateHeadingId(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .trim();
-}
-
-// =======================
-// Utility: createHeadingComponent
-// =======================
-function createHeadingComponent(tag: "h1" | "h2" | "h3" | "h4" | "h5" | "h6") {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ({ ...props }: any) => {
-    const text = String(props.children);
-    const id = generateHeadingId(text);
-    const HeadingTag = tag;
-    return <HeadingTag id={id} {...props} />;
-  };
-}
-
-// =======================
-// Component: DocumentTOC
-// =======================
-function DocumentTOC({ toc }: { toc: TOCItem[] }) {
-  return (
-    <nav className="document-toc">
-      <h2 className="document-toc-title">Table of Contents</h2>
-      <ul className="document-toc-list">
-        {toc.map((item, index) => (
-          <li
-            key={index}
-            className={`document-toc-item document-toc-level-${item.level}`}
-          >
-            <a href={`#${item.id}`} className="document-toc-link">
-              {item.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
-}
-
-// =======================
-// Component: DocumentMarkdown
-// =======================
-function DocumentMarkdown({ markdown }: { markdown: string }) {
-  return (
-    <div className="document-markdown">
-      <ReactMarkdown
-        remarkPlugins={[remarkEmoji]}
-        components={{
-          img: ({ src, alt, ...props }) => {
-            if (
-              src &&
-              !src.startsWith("http") &&
-              !src.startsWith("//")
-            ) {
-              const githubRawUrl = `https://raw.githubusercontent.com/HappyHackingSpace/awesome-hackathon/main/${src}`;
-              return <img src={githubRawUrl} alt={alt} {...props} />;
-            }
-            return <img src={src} alt={alt} {...props} />;
-          },
-          h1: createHeadingComponent("h1"),
-          h2: createHeadingComponent("h2"),
-          h3: createHeadingComponent("h3"),
-          h4: createHeadingComponent("h4"),
-          h5: createHeadingComponent("h5"),
-          h6: createHeadingComponent("h6"),
-        }}
-      >
-        {markdown}
-      </ReactMarkdown>
-    </div>
-  );
-}
-
-// =======================
-// Component: DocumentContent
-// =======================
-function DocumentContent({
-  loading,
-  error,
-  markdown,
-}: {
-  loading: boolean;
-  error: string | null;
-  markdown: string;
-}) {
-  if (loading) {
-    return <div className="document-loading">Loading...</div>;
-  }
-  if (error) {
-    return <div className="document-error">Error: {error}</div>;
-  }
-  if (!markdown) {
-    return <div className="document-empty">No content available.</div>;
-  }
-  return <DocumentMarkdown markdown={markdown} />;
-}
-
-// =======================
-// Component: Document
-// =======================
 export default function Document() {
   const [markdown, setMarkdown] = useState<string>("");
   const [toc, setToc] = useState<TOCItem[]>([]);
@@ -149,10 +39,13 @@ export default function Document() {
           <DocumentTOC toc={toc} />
         </aside>
         <main className="document-content">
-          <DocumentContent loading={loading} error={error} markdown={markdown} />
+          <DocumentContent
+            loading={loading}
+            error={error}
+            markdown={markdown}
+          />
         </main>
       </div>
     </div>
   );
 }
-
