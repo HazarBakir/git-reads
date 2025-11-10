@@ -12,6 +12,8 @@ export interface TOCItem {
   id: string;
 }
 
+import { generateHeadingId } from "../utils/generateHeadingId";
+
 /**
  * Decodes GitHub README base64 response and parses it into sections (heading + description)
  * @param readmeResponseData: { content: string, encoding: string }
@@ -92,14 +94,9 @@ export function parseTOC(markdown: string): TOCItem[] {
     if (headingMatch) {
       const level = headingMatch[1].length;
       const text = headingMatch[2].trim();
-      
-      // Generate ID from heading text
-      const id = text
-        .toLowerCase()
-        .replace(/[^\w\s-]/g, '') // Remove special characters
-        .replace(/\s+/g, '-') // Replace spaces with hyphens
-        .replace(/-+/g, '-') // Replace multiple hyphens with single
-        .trim();
+
+      // Use generateHeadingId util for consistency with app-wide heading id generation
+      const id = generateHeadingId(text);
 
       toc.push({ level, text, id });
     }
@@ -107,4 +104,3 @@ export function parseTOC(markdown: string): TOCItem[] {
 
   return toc;
 }
-
