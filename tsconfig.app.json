@@ -26,5 +26,11 @@
     "noFallthroughCasesInSwitch": true
     // "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "src/components/Header/Header.tsx"
+  ],
+  "exclude": [
+    "src/components/Header.tsx"
+  ]
 }
