@@ -1,3 +1,4 @@
+import './DocumentTOC.css'
 import type { TOCItem } from "@/lib/parser";
 
 export function DocumentTOC({ toc }: { toc: TOCItem[] }) {
