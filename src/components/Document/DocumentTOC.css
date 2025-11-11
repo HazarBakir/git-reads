@@ -1,185 +1,193 @@
 .document-toc {
-    padding: 1.6rem 1.1rem 1.25rem 1.3rem;
-    border-radius: 14px;
-    border-left: 6px solid var(--doc-toc-border);
-    border-top: 1.5px solid rgba(83, 43, 220, 0.2);
-    border-bottom: 1.5px solid rgba(83, 43, 220, 0.15);
-    border-right: 1.5px solid rgba(83, 43, 220, 0.08);
-    box-shadow: 0 6px 32px 0 rgba(61, 51, 109, 0.12);
-    min-width: 0;
-    overflow: hidden;
-    position: relative;
-    background: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-  
-  .document-toc::before {
-    content: "";
-    display: block;
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2.2em;
-    z-index: 12;
-    pointer-events: none;
-  }
-  
-  .document-toc-list {
-    list-style: none;
-    padding: 0 0 0 0.15rem;
-    margin: 0;
-    counter-reset: toc-counter;
-    max-height: 72vh;
-    overflow-y: auto;
-    position: relative;
-    scroll-behavior: smooth;
-  }
-  
-  .document-toc-list::after {
-    content: "";
-    display: block;
-    position: sticky;
-    position: -webkit-sticky;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1.8em;
-    pointer-events: none;
-    z-index: 11;
-    background: linear-gradient(
-      to top,
-      rgba(30, 20, 40, 0.28) 0%,
-      rgba(30, 20, 40, 0.06) 85%,
-      transparent 100%
-    );
-  }
-  
-  .document-toc-title {
-    font-size: 1.12em;
-    color: var(--doc-toc-title);
-    margin: 0 0 1.1rem 0;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    text-shadow: 0 1px 8px #532bdc22;
-    padding-left: 0.2em;
-    background: none !important;
-  }
-  
-  .document-toc-item {
-    margin-bottom: 0.35rem;
-    position: relative;
-  }
-  
-  .document-toc-level-1 {
-    font-weight: 700;
-    margin-left: 0;
-    font-size: 1.12em;
-    background: linear-gradient(
-      to right,
-      var(--doc-toc-l1-bg) 25%,
-      transparent 100%
-    );
-    border-radius: 4px;
-    padding-left: 0.35em;
-    border-left: 4px solid var(--doc-toc-l1-border);
-    max-width: 92%;
-    margin-top: 0.8em;
-    margin-bottom: 0.1em;
-  }
-  .document-toc-level-2 {
-    margin-left: 1.1rem;
-    font-size: 1em;
-    font-weight: 650;
-    border-left: 3px solid var(--doc-toc-l2-border);
-    background: linear-gradient(
-      to right,
-      var(--doc-toc-l2-bg) 18%,
-      transparent 100%
-    );
-    border-radius: 4px;
-    padding-left: 0.55em;
-    max-width: 90%;
-    margin-top: 0.2em;
-    margin-bottom: 0.1em;
-  }
-  .document-toc-level-3 {
-    margin-left: 2rem;
-    font-size: 0.95em;
-    font-weight: 600;
-    border-left: 2px solid var(--doc-toc-l3-border);
-    background: var(--doc-toc-l3-bg);
-    border-radius: 3px;
-    padding-left: 0.6em;
-    max-width: 87%;
-    opacity: 0.93;
-    margin-top: 0.09em;
-    margin-bottom: 0.08em;
-  }
-  .document-toc-level-4 {
-    margin-left: 2.85rem;
-    font-size: 0.91em;
-    font-weight: 500;
-    border-left: 2px dotted var(--doc-toc-l4-border);
-    padding-left: 0.83em;
-    max-width: 84%;
-    opacity: 0.87;
-    background: transparent;
-    margin-top: 0.06em;
-    margin-bottom: 0.06em;
-  }
-  .document-toc-level-5 {
-    margin-left: 3.6rem;
-    font-size: 0.86em;
-    font-weight: 500;
-    border-left: 1.5px dashed var(--doc-toc-l5-border);
-    padding-left: 0.9em;
-    max-width: 83%;
-    opacity: 0.81;
-    background: transparent;
-    margin-top: 0.04em;
-    margin-bottom: 0.04em;
-  }
-  .document-toc-level-6 {
-    margin-left: 4.3rem;
-    font-size: 0.78em;
-    font-weight: 450;
-    border-left: 1.3px dashed var(--doc-toc-l6-border);
-    padding-left: 0.9em;
-    max-width: 82%;
-    opacity: 0.68;
-    background: transparent;
-    margin-top: 0.02em;
-    margin-bottom: 0.02em;
-  }
-  
-  .document-toc-link {
-    color: var(--doc-toc-link);
-    text-decoration: none;
-    display: block;
-    padding: 0.12em 0.18em;
-    border-radius: 4px;
-    position: relative;
-    transition: color 0.15s, box-shadow 0.18s, background 0.18s;
-    outline: none;
-    background: none !important;
-  }
-  .document-toc-link:hover,
-  .document-toc-link:focus-visible {
-    color: var(--doc-link-hover);
-    background: #432eda29 !important;
-    box-shadow: 0 1px 8px #7a5fff15;
-  }
-  .document-toc-link[aria-current="true"] {
-    color: var(--doc-link-hover);
-    background: #432eda52 !important;
-    font-weight: 900;
-    box-shadow: 0 1px 12px #7a5fff27;
-  }
-  .document-toc-link:active {
-    color: #fadcf7;
-    background: #7a5fff23 !important;
-  }
+  padding: 1.6rem 1.1rem 1.25rem 1.3rem;
+  border-radius: 14px;
+  border-left: 6px solid var(--doc-toc-border);
+  border-top: 1.5px solid rgba(83, 43, 220, 0.2);
+  border-bottom: 1.5px solid rgba(83, 43, 220, 0.15);
+  border-right: 1.5px solid rgba(83, 43, 220, 0.08);
+  box-shadow: 0 6px 32px 0 rgba(61, 51, 109, 0.12);
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+  background: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.document-toc::before {
+  content: "";
+  display: block;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.2em;
+  z-index: 12;
+  pointer-events: none;
+}
+
+.document-toc-list {
+  list-style: none;
+  padding: 0 0 0 0.15rem;
+  margin: 0;
+  counter-reset: toc-counter;
+  max-height: 72vh;
+  overflow-y: auto;
+  position: relative;
+  scroll-behavior: smooth;
+}
+
+.document-toc-list::after {
+  content: "";
+  display: block;
+  position: sticky;
+  position: -webkit-sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1.8em;
+  pointer-events: none;
+  z-index: 11;
+  background: linear-gradient(
+    to top,
+    rgba(30, 20, 40, 0.28) 0%,
+    rgba(30, 20, 40, 0.06) 85%,
+    transparent 100%
+  );
+}
+
+.document-toc-title {
+  font-size: 1.12em;
+  color: var(--doc-toc-title);
+  margin: 0 0 1.1rem 0;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 8px #532bdc22;
+  padding-left: 0.2em;
+  background: none !important;
+}
+
+.document-toc-item {
+  margin-bottom: 0.35rem;
+  position: relative;
+}
+
+.document-toc-level-1 {
+  font-weight: 700;
+  margin-left: 0;
+  font-size: 1.12em;
+  background: linear-gradient(
+    to right,
+    var(--doc-toc-l1-bg) 25%,
+    transparent 100%
+  );
+  border-radius: 4px;
+  padding-left: 0.35em;
+  border-left: 3px solid var(--doc-toc-l1-border);
+  max-width: 92%;
+  margin-top: 0.8em;
+  margin-bottom: 0.1em;
+}
+.document-toc-level-2 {
+  margin-left: 1.1rem;
+  font-size: 1em;
+  font-weight: 650;
+  border-left: 2px solid var(--doc-toc-l2-border);
+  background: linear-gradient(
+    to right,
+    var(--doc-toc-l2-bg) 18%,
+    transparent 100%
+  );
+  border-radius: 4px;
+  padding-left: 0.55em;
+  max-width: 90%;
+  margin-top: 0.2em;
+  margin-bottom: 0.1em;
+}
+.document-toc-level-3 {
+  margin-left: 2rem;
+  font-size: 0.95em;
+  font-weight: 600;
+  border-left: 2px solid var(--doc-toc-l3-border);
+  background: linear-gradient(
+    to right,
+    var(--doc-toc-l2-bg) 18%,
+    transparent 100%
+  );
+  border-radius: 3px;
+  padding-left: 0.6em;
+  max-width: 87%;
+  opacity: 0.93;
+  margin-top: 0.09em;
+  margin-bottom: 0.08em;
+}
+.document-toc-level-4 {
+  margin-left: 2.85rem;
+  font-size: 0.91em;
+  font-weight: 500;
+  border-left: 2px solid var(--doc-toc-l4-border);
+  padding-left: 0.83em;
+  max-width: 84%;
+  opacity: 0.87;
+  background: linear-gradient(
+    to right,
+    var(--doc-toc-l2-bg) 18%,
+    transparent 100%
+  );
+  margin-top: 0.06em;
+  margin-bottom: 0.06em;
+}
+.document-toc-level-5 {
+  margin-left: 3.6rem;
+  font-size: 0.86em;
+  font-weight: 500;
+  border-left: 1.5px dashed var(--doc-toc-l5-border);
+  padding-left: 0.9em;
+  max-width: 83%;
+  opacity: 0.81;
+  background: transparent;
+  margin-top: 0.04em;
+  margin-bottom: 0.04em;
+}
+.document-toc-level-6 {
+  margin-left: 4.3rem;
+  font-size: 0.78em;
+  font-weight: 450;
+  border-left: 1.3px dashed var(--doc-toc-l6-border);
+  padding-left: 0.9em;
+  max-width: 82%;
+  opacity: 0.68;
+  background: transparent;
+  margin-top: 0.02em;
+  margin-bottom: 0.02em;
+}
+
+.document-toc-link {
+  color: var(--doc-toc-link);
+  text-decoration: none;
+  display: block;
+  padding: 0.12em 0.18em;
+  border-radius: 4px;
+  position: relative;
+  transition: color 0.15s, box-shadow 0.18s, background 0.18s;
+  outline: none;
+  background: none !important;
+}
+.document-toc-link:hover,
+.document-toc-link:focus-visible {
+  color: var(--doc-link-hover);
+  background: #432eda29 !important;
+  box-shadow: 0 1px 8px #7a5fff15;
+}
+.document-toc-link[aria-current="true"] {
+  color: var(--doc-link-hover);
+  background: #432eda52 !important;
+  font-weight: 900;
+  box-shadow: 0 1px 12px #7a5fff27;
+}
+.document-toc-link:active {
+  color: #fadcf7;
+  background: #7a5fff23 !important;
+}

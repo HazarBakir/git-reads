@@ -1,18 +1,27 @@
-import './DocumentTOC.css'
+import { formatTitle } from "@/utils/fortmatTitle";
+import "./DocumentTOC.css";
 import type { TOCItem } from "@/lib/parser";
 
 export function DocumentTOC({ toc }: { toc: TOCItem[] }) {
+  const rawTocTitle = toc[0]?.text || "Document";
+  const tocTitle = formatTitle(rawTocTitle);
+
+  const filteredToc = toc.filter((item, idx) => {
+    if (idx === 0 && formatTitle(item.text) === tocTitle) return false;
+    return true;
+  });
+
   return (
     <nav className="document-toc">
-      <h2 className="document-toc-title">Table of Contents</h2>
+      <h2 className="document-toc-title">{tocTitle}</h2>
       <ul className="document-toc-list">
-        {toc.map((item, index) => (
+        {filteredToc.map((item, index) => (
           <li
             key={index}
             className={`document-toc-item document-toc-level-${item.level}`}
           >
             <a href={`#${item.id}`} className="document-toc-link">
-              {item.text}
+              {formatTitle(item.text)}
             </a>
           </li>
         ))}
