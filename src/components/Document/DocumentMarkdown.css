@@ -2,3 +2,159 @@
     color: var(--doc-color);
     line-height: 1.7;
   }
+
+
+  .document-markdown h1 img,
+.document-markdown h2 img,
+.document-markdown h3 img,
+.document-markdown h4 img,
+.document-markdown h5 img,
+.document-markdown h6 img {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 0.3em;
+  max-height: 1.2em;
+  width: auto;
+  border-radius: 3px;
+  padding: 0;
+  background: transparent;
+}
+
+.document-markdown h1 a,
+.document-markdown h2 a,
+.document-markdown h3 a,
+.document-markdown h4 a,
+.document-markdown h5 a,
+.document-markdown h6 a {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.document-markdown h1 a img,
+.document-markdown h2 a img,
+.document-markdown h3 a img,
+.document-markdown h4 a img,
+.document-markdown h5 a img,
+.document-markdown h6 a img {
+  margin: 0 0.2em;
+  max-height: 1em;
+}
+
+.document-markdown a {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.document-markdown a:hover {
+  color: var(--doc-link-hover);
+  text-decoration-color: var(--doc-link-hover);
+  transform: translateY(-1px);
+}
+
+  .document-markdown details {
+  margin: 1em 0;
+  padding: 0.8em 1em;
+  border: 1px solid rgba(83, 43, 220, 0.3);
+  border-radius: 8px;
+  background: rgba(16, 5, 136, 0.4);
+  transition: all 0.3s ease;
+}
+
+.document-markdown details:hover {
+  border-color: rgba(83, 43, 220, 0.6);
+  background: rgba(63, 51, 197, 0.6);
+  box-shadow: 0 2px 8px rgba(83, 43, 220, 0.2);
+}
+
+.document-markdown details[open] {
+  border-color: rgba(83, 43, 220, 0.8);
+  background: rgba(34, 15, 245, 0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+  .document-markdown details {
+    border-color: rgba(135, 116, 255, 0.24);
+    background: rgba(22, 1, 107, 0.7);
+  }
+  .document-markdown details:hover {
+    border-color: rgba(182, 160, 255, 0.35);
+    background: rgba(33, 16, 117, 0.65);
+    box-shadow: 0 2px 12px rgba(201, 186, 255, 0.12);
+  }
+  .document-markdown details[open] {
+    border-color: rgba(178, 160, 255, 0.55);
+    background: rgba(11, 4, 61, 0.7);
+  }
+}
+
+.document-markdown summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--doc-link);
+  user-select: none;
+  padding: 0.3em 0;
+  transition: all 0.2s ease;
+  list-style: none;
+  position: relative;
+  padding-left: 1.5em;
+}
+
+.document-markdown summary::before {
+  content: "▶";
+  position: absolute;
+  left: 0;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.document-markdown details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.document-markdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.document-markdown summary:hover {
+  color: var(--doc-link-hover);
+  transform: translateX(3px);
+}
+
+.document-markdown details > *:not(summary) {
+  margin-top: 0.8em;
+  padding-left: 1.5em;
+  animation: slideDown 0.3s ease;
+  background: var(--document-details-bg, #fff);
+  color: var(--document-details-fg, #191525);
+  border-radius: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .document-markdown details > *:not(summary) {
+    background: var(--document-details-bg-dark, rgba(23,21,45,0.4));
+    color: var(--document-details-fg-dark, #fff);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .document-markdown details > *:not(summary) {
+    background: var(--document-details-bg-light, #f6f8fa);
+    color: var(--document-details-fg-light, #532c9b);
+    /* Softer shadow and gentle border for elegant look */
+    box-shadow: 0 2px 12px #dad5f866;
+    border: 1px solid #cfc6e9;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
