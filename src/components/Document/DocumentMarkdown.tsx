@@ -1,7 +1,7 @@
 
 import remarkEmoji from "remark-emoji";
 import ReactMarkdown from "react-markdown";
-import { createHeadingComponent } from "../../utils/createHeadingComponent";
+import { createHeadingComponent } from "@/utils/createHeadingComponent";
 
 
 export function DocumentMarkdown({ markdown }: { markdown: string }) {

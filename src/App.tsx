@@ -1,8 +1,8 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Landing from "./pages/Landing/Landing";
-import Document from "./pages/Document/Document";
-import Header from './components/Header/Header';
+import Landing from "@/pages/Landing/Landing";
+import Document from "@/pages/Document/Document";
+import Header from "@/components/Header/Header";
 
 function App() {
   return (
@@ -19,4 +19,3 @@ function App() {
 }
 
 export default App;
-

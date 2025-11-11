@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import type { TOCItem } from "../../lib/parser";
-import { FetchReadme } from "../../lib/github";
-import { parseTOC } from "../../lib/parser";
 import "./Document.css";
-import { DocumentContent } from "../../components/Document/DocumentContent";
-import { DocumentTOC } from "../../components/Document/DocumentTOC";
+import { useEffect, useState } from "react";
+import type { TOCItem } from "@/lib/parser";
+import { FetchReadme } from "@/lib/github";
+import { parseTOC } from "@/lib/parser";
+import { DocumentContent } from "@/components/Document/DocumentContent";
+import { DocumentTOC } from "@/components/Document/DocumentTOC";
 
 export default function Document() {
   const [markdown, setMarkdown] = useState<string>("");

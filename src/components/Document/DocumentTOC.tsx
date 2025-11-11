@@ -1,4 +1,4 @@
-import type { TOCItem } from "../../lib/parser";
+import type { TOCItem } from "@/lib/parser";
 
 export function DocumentTOC({ toc }: { toc: TOCItem[] }) {
   return (

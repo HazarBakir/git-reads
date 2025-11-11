@@ -12,7 +12,8 @@ export interface TOCItem {
   id: string;
 }
 
-import { generateHeadingId } from "../utils/generateHeadingId";
+// Alias import using @ as base alias
+import { generateHeadingId } from "@/utils/generateHeadingId";
 
 /**
  * Decodes GitHub README base64 response and parses it into sections (heading + description)
