@@ -35,6 +35,34 @@
   color: #888;
 }
 
+@media (prefers-color-scheme: light) {
+  .app-root-grid {
+    background: #fff;
+    color: #222;
+  }
+  .card {
+    background: #f8f8fa;
+    color: #222;
+  }
+  .read-the-docs {
+    color: #888;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .app-root-grid {
+    background: #23232c;
+    color: #fafafa;
+  }
+  .card {
+    background: #2d2d40;
+    color: #fafafa;
+  }
+  .read-the-docs {
+    color: #aaa;
+  }
+}
+
 .app-root-grid {
   display: grid;
   grid-template-areas:
