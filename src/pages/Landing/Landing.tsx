@@ -1,11 +1,11 @@
 import "./Landing.css";
-import { useEffect } from "react";
-import { FetchReadme } from "@/lib/github";
+// import { useEffect } from "react";
+// import { FetchReadme } from "@/lib/github";
 
 export default function Landing() {
-  useEffect(() => {
-    FetchReadme();
-  }, []);
+  // useEffect(() => {
+  //   FetchReadme({ owner: 'avelino', repo: 'awesome-go', branch: 'main' });
+  // }, []);
 
   return (
     <>
