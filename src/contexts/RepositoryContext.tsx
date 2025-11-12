@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from "react";
 
 export interface RepositoryInfo {
   owner: string;
@@ -12,27 +12,30 @@ interface RepositoryContextType {
 }
 
 const defaultRepository: RepositoryInfo = {
-  owner: 'avelino',
-  repo: 'awesome-go',
-  branch: 'main'
+  owner: "hazarbakir",
+  repo: "Awesome-Hackathon",
+  branch: "main",
 };
 
-const RepositoryContext = createContext<RepositoryContextType | undefined>(undefined);
+const RepositoryContext = createContext<RepositoryContextType | undefined>(
+  undefined
+);
 
 export function RepositoryProvider({ children }: { children: ReactNode }) {
-  const [repositoryInfo, setRepositoryInfo] = useState<RepositoryInfo>(defaultRepository);
+  const [repositoryInfo, setRepositoryInfo] =
+    useState<RepositoryInfo>(defaultRepository);
 
   return (
     <RepositoryContext.Provider value={{ repositoryInfo, setRepositoryInfo }}>
       {children}
-    </RepositoryContext.Provider>   
+    </RepositoryContext.Provider>
   );
 }
 
 export function useRepository() {
   const context = useContext(RepositoryContext);
   if (!context) {
-    throw new Error('useRepository must be used within a RepositoryProvider');
+    throw new Error("useRepository must be used within a RepositoryProvider");
   }
   return context;
 }
