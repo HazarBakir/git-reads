@@ -35,13 +35,12 @@
 }
 
 .document-toc {
-  padding: 1.6rem 1.1rem 1.25rem 1.3rem;
-  border-radius: 14px;
-  border-left: 6px solid var(--doc-toc-side-border);
-  box-shadow: 0 6px 32px 0 rgba(61, 51, 109, 0.12);
+  padding-top: 15px;
+  padding-bottom: 15px;
   min-width: 0;
   overflow: hidden;
   position: relative;
+  margin-top: 3em;
 }
 
 .document-toc-list {
@@ -69,9 +68,8 @@
   padding: 0.25em 0 0.15em 0;
   border-radius: 8px;
   line-height: 1.33;
-  box-shadow: var(--doc-toc-title-box-shadow);
-  background: var(--doc-toc-title-bg);
   transition: color 0.15s;
+  border-bottom: 2px solid var(--doc-toc-side-border);
 }
 .document-toc-title:hover,
 .document-toc-title:focus-visible {
