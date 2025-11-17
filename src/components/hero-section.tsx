@@ -3,33 +3,28 @@ import { TextEffect } from "@/components/ui/text-effect";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { HeroHeader } from "./header";
 
-const transitionVariants = {
-  item: {
-    hidden: {
-      opacity: 0,
-      filter: "blur(12px)",
-      y: 12,
-    },
-    visible: {
-      opacity: 1,
-      filter: "blur(0px)",
-      y: 0,
-      transition: {
-        type: "spring",
-        bounce: 0.3,
-        duration: 1.5,
-      },
-    },
+const heroShowcaseContainerVariants = {
+  visible: {
+    transition: { staggerChildren: 0.05, delayChildren: 0.75 },
   },
 };
 
-const heroShowcaseVariants = {
-  container: {
-    visible: {
-      transition: { staggerChildren: 0.05, delayChildren: 0.75 },
+const heroShowcaseItemVariants = {
+  hidden: {
+    opacity: 0,
+    filter: "blur(12px)",
+    y: 12,
+  },
+  visible: {
+    opacity: 1,
+    filter: "blur(0px)",
+    y: 0,
+    transition: {
+      type: "spring" as const,
+      bounce: 0.3,
+      duration: 1.5,
     },
   },
-  item: transitionVariants.item,
 };
 
 export default function HeroSection() {
@@ -79,24 +74,8 @@ export default function HeroSection() {
 
                 <AnimatedGroup
                   variants={{
-                    container: heroShowcaseVariants.container,
-                    item: {
-                      hidden: {
-                        opacity: 0,
-                        filter: "blur(8px)",
-                        y: 56,
-                      },
-                      visible: {
-                        opacity: 1,
-                        filter: "blur(0px)",
-                        y: 0,
-                        transition: {
-                          type: "spring" as const,
-                          bounce: 0.22,
-                          duration: 0.8,
-                        },
-                      },
-                    },
+                    container: heroShowcaseContainerVariants,
+                    item: heroShowcaseItemVariants,
                   }}
                 >
                   <div className="flex w-full max-w-xl items-center gap-2 mt-12">
@@ -105,7 +84,7 @@ export default function HeroSection() {
                       className="rounded-xl px-5 text-base cursor-pointer"
                       onClick={handleDocumentRedirect}
                     >
-                      Try GitReads
+                      Try Prototype
                     </Button>
                   </div>
                 </AnimatedGroup>
@@ -113,24 +92,8 @@ export default function HeroSection() {
             </div>
             <AnimatedGroup
               variants={{
-                container: heroShowcaseVariants.container,
-                item: {
-                  hidden: {
-                    opacity: 0,
-                    filter: 'blur(8px)',
-                    y: 56,
-                  },
-                  visible: {
-                    opacity: 1,
-                    filter: 'blur(0px)',
-                    y: 0,
-                    transition: {
-                      type: "spring" as const,
-                      bounce: 0.22,
-                      duration: 0.8,
-                    },
-                  },
-                },
+                container: heroShowcaseContainerVariants,
+                item: heroShowcaseItemVariants,
               }}
             >
               <div className="mask-b-from-55% relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
