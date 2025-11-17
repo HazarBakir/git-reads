@@ -1,9 +1,10 @@
 import type { ReadmeSection, TOCItem } from "@/types/parser";
 import { generateHeadingId } from "@/utils/generateHeadingId";
 
-export function parseReadmeSections(
-  readmeResponseData: { content?: string; encoding?: string }
-): ReadmeSection[] {
+export function parseReadmeSections(readmeResponseData: {
+  content?: string;
+  encoding?: string;
+}): ReadmeSection[] {
   if (!readmeResponseData || !readmeResponseData.content) {
     return [];
   }
@@ -41,7 +42,10 @@ export function parseReadmeSections(
       currentDescriptionLines.push(line);
     }
   }
-  if (currentHeading || currentDescriptionLines.some(line => line.trim() !== "")) {
+  if (
+    currentHeading ||
+    currentDescriptionLines.some((line) => line.trim() !== "")
+  ) {
     sections.push({
       heading: currentHeading,
       description: currentDescriptionLines.join("\n").trim(),
@@ -65,7 +69,7 @@ export function parseTOC(markdown: string): TOCItem[] {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    
+
     const fenceMatch = line.match(/^(\s*)(`{3,}|~{3,})(.*)$/);
     if (fenceMatch) {
       if (inCodeBlock && fenceMatch[2] === codeBlockFence) {
@@ -75,7 +79,7 @@ export function parseTOC(markdown: string): TOCItem[] {
         inCodeBlock = true;
         codeBlockFence = fenceMatch[2];
       }
-      continue; 
+      continue;
     }
 
     if (inCodeBlock) {
@@ -95,4 +99,3 @@ export function parseTOC(markdown: string): TOCItem[] {
 
   return toc;
 }
-  
