@@ -268,7 +268,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </CollapsibleContent>
               </SidebarGroup>
             </Collapsible>
-          ))
+          ))  
         )}
       </SidebarContent>
       <SidebarRail />

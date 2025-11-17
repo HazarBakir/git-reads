@@ -15,7 +15,7 @@ const heroShowcaseItemVariants = {
     filter: "blur(12px)",
     y: 12,
   },
-  visible: {
+  visible: {    
     opacity: 1,
     filter: "blur(0px)",
     y: 0,
