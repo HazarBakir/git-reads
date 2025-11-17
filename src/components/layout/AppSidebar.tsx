@@ -176,18 +176,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [navItems, setNavItems] = useState<NavItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [branches, setBranches] = useState<string[]>([]);
-  const [isLoadingBranches, setIsLoadingBranches] = useState(true);
 
   useEffect(() => {
     async function loadBranches() {
       try {
-        setIsLoadingBranches(true);
         const branchList = await FetchBranches(repositoryInfo);
         setBranches(branchList);
       } catch (error) {
         setBranches([repositoryInfo.branch || "main"]);
-      } finally {
-        setIsLoadingBranches(false);
       }
     }
 
