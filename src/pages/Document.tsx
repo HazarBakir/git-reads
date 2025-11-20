@@ -15,10 +15,11 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { DocumentMarkdown } from "@/components/document/DocumentMarkdown";
+import { RepositoryInputModal } from "@/components/document/RepositoryInputModal";
 import { useRepository } from "@/hooks/useRepository";
 import { FetchReadme } from "@/lib/github";
 import { parseTOC } from "@/lib/parser";
-import { type TOCItem } from "@/types";
+import { type TOCItem, type RepositoryInfo } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
@@ -56,27 +57,58 @@ function ReadmeSkeleton() {
 }
 
 export default function Page() {
-  const { repositoryInfo } = useRepository();
+  const { repositoryInfo, setRepositoryInfo } = useRepository();
   const [markdown, setMarkdown] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeHeadingId, setActiveHeadingId] = useState<string>("");
   const [tocItems, setTocItems] = useState<TOCItem[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [hasInitialized, setHasInitialized] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
+  const [repo404, setRepo404] = useState(false);
+
   useEffect(() => {
+    if (!hasInitialized) {
+      setShowModal(true);
+      setHasInitialized(true);
+    }
+  }, [hasInitialized]);
+
+  useEffect(() => {
+    if (!repositoryInfo?.owner || !repositoryInfo?.repo || showModal) {
+      if (showModal) {
+        setIsLoading(false);
+      }
+      return;
+    }
+
     async function loadReadme() {
       try {
         setIsLoading(true);
         setError(null);
+        setRepo404(false);
+        if (!repositoryInfo) {
+          throw new Error("Missing repository info");
+        }
         const content = await FetchReadme(repositoryInfo);
         setMarkdown(content);
 
         const parsedTOC = parseTOC(content);
         setTocItems(parsedTOC);
       } catch (err) {
-        const errorMessage =
+        let errorMessage =
           err instanceof Error ? err.message : "Failed to load README content";
+        if (
+          errorMessage.toLowerCase().includes("404") ||
+          errorMessage.toLowerCase().includes("not found")
+        ) {
+          setRepo404(true);
+          setShowModal(true);
+          setRepositoryInfo(null);
+          errorMessage = "Repository not found. Please try another URL.";
+        }
         setError(errorMessage);
       } finally {
         setIsLoading(false);
@@ -84,8 +116,7 @@ export default function Page() {
     }
 
     loadReadme();
-  }, [repositoryInfo]);
-
+  }, [repositoryInfo, showModal, setRepositoryInfo]);
   useEffect(() => {
     if (!markdown || isLoading) return;
 
@@ -203,16 +234,28 @@ export default function Page() {
 
   const breadcrumbPath = getBreadcrumbPath();
 
-  // Compute the GitHub repo URL from repositoryInfo
   const githubUrl =
-    repositoryInfo.owner && repositoryInfo.repo
+    repositoryInfo?.owner && repositoryInfo?.repo
       ? `https://github.com/${repositoryInfo.owner}/${repositoryInfo.repo}`
       : null;
+
+  const handleRepositoryChange = (newRepositoryInfo: RepositoryInfo) => {
+    setRepositoryInfo(newRepositoryInfo);
+    setShowModal(false);
+    setError(null);
+    setRepo404(false);
+  };
 
   return (
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
+        <RepositoryInputModal
+          open={showModal}
+          onOpenChange={setShowModal}
+          onRepositoryChange={handleRepositoryChange}
+          currentRepository={repositoryInfo ?? undefined}
+        />
         <header className="bg-background sticky top-0 z-10 flex h-14 md:h-16 shrink-0 items-center gap-2 border-b px-2 sm:px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-1 sm:mr-2 h-4" />
@@ -269,16 +312,26 @@ export default function Page() {
           ref={contentRef}
           className="flex flex-1 flex-col gap-4 p-3 sm:p-4 md:p-6 lg:p-8 xl:p-12"
         >
-          {isLoading ? (
+          {showModal ? (
+            <div className="flex items-center justify-center h-full min-h-[200px]">
+              <div className="text-muted-foreground text-sm sm:text-base px-4 text-center">
+                {repo404
+                  ? "Repository not found. Please enter a valid GitHub repository URL."
+                  : "Please enter a GitHub repository URL."}
+              </div>
+            </div>
+          ) : isLoading ? (
             <div className="flex items-center justify-center h-full min-h-[200px]">
               <ReadmeSkeleton />
             </div>
           ) : error ? (
-            <div className="flex items-center justify-center h-full min-h-[200px]">
-              <div className="text-destructive text-sm sm:text-base px-4 text-center">
-                {error}
+            !repo404 && (
+              <div className="flex items-center justify-center h-full min-h-[200px]">
+                <div className="text-destructive text-sm sm:text-base px-4 text-center">
+                  {error}
+                </div>
               </div>
-            </div>
+            )
           ) : (
             <DocumentMarkdown markdown={markdown} />
           )}

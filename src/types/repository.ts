@@ -5,6 +5,6 @@ export interface RepositoryInfo {
 }
 
 export interface RepositoryContextType {
-  repositoryInfo: RepositoryInfo;
-  setRepositoryInfo: (info: RepositoryInfo) => void;
+  repositoryInfo: RepositoryInfo | null;
+  setRepositoryInfo: (info: RepositoryInfo | null) => void;
 }

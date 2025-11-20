@@ -1,6 +1,14 @@
 import { type RepositoryInfo } from "@/types";
 
-export async function FetchReadme(repoInfo: RepositoryInfo): Promise<string> {
+export async function FetchReadme(
+  repoInfo: RepositoryInfo | null | undefined
+): Promise<string> {
+  if (!repoInfo || !repoInfo.owner || !repoInfo.repo) {
+    throw new Error(
+      "Invalid repository info: owner, repo, and branch are required"
+    );
+  }
+
   try {
     const branch = repoInfo.branch || "main";
     const rawUrl = `https://raw.githubusercontent.com/${repoInfo.owner}/${repoInfo.repo}/${branch}/README.md`;
@@ -29,8 +37,11 @@ export async function FetchReadme(repoInfo: RepositoryInfo): Promise<string> {
 }
 
 export async function FetchBranches(
-  repoInfo: RepositoryInfo
+  repoInfo: RepositoryInfo | null | undefined
 ): Promise<string[]> {
+  if (!repoInfo || !repoInfo.owner || !repoInfo.repo) {
+    return [repoInfo?.branch || "main"];
+  }
   const apiUrl = `https://api.github.com/repos/${repoInfo.owner}/${repoInfo.repo}/branches`;
   try {
     const response = await fetch(apiUrl);
@@ -41,7 +52,7 @@ export async function FetchBranches(
     return Array.isArray(data)
       ? data.map((branch) => branch.name)
       : [repoInfo.branch || "main"];
-  } catch (error) {
+  } catch {
     return [repoInfo.branch || "main"];
   }
 }
