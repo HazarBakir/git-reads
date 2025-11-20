@@ -195,12 +195,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [branches, setBranches] = useState<string[]>([]);
 
   useEffect(() => {
+    if (!repositoryInfo) {
+      setBranches([]);
+      return;
+    }
+
     async function loadBranches() {
       try {
-        const branchList = await FetchBranches(repositoryInfo);
-        setBranches(branchList);
+        if (repositoryInfo) {
+          const branchList = await FetchBranches(repositoryInfo);
+          setBranches(branchList);
+        }
       } catch (error) {
-        setBranches([repositoryInfo.branch || "main"]);
+        setBranches([repositoryInfo?.branch || "main"]);
         console.log(error);
       }
     }
@@ -209,6 +216,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }, [repositoryInfo]);
 
   useEffect(() => {
+    if (!repositoryInfo) {
+      setNavItems([]);
+      setIsLoading(false);
+      return;
+    }
+
     async function loadReadmeTOC() {
       try {
         setIsLoading(true);
@@ -228,6 +241,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }, [repositoryInfo]);
 
   const handleBranchChange = (branch: string) => {
+    if (!repositoryInfo) return;
     setRepositoryInfo({
       ...repositoryInfo,
       branch: branch,
@@ -239,7 +253,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <VersionSwitcher
           versions={branches}
-          defaultVersion={repositoryInfo.branch || "main"}
+          defaultVersion={repositoryInfo?.branch || "main"}
           onVersionChange={handleBranchChange}
         />
         <SearchForm />
