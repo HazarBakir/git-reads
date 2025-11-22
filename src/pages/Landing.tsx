@@ -4,6 +4,7 @@ import WaitList from "@/components/landing-page/waitlist";
 import { DotsBackground } from "@/components/landing-page/background";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { HeroHeader } from "@/components/landing-page/header";
+import Contributors from "@/components/landing-page/contributors";
 
 export default function Landing() {
   const heroShowcaseContainerVariants = {
@@ -41,6 +42,7 @@ export default function Landing() {
       >
         <HeroSection />
         <Features />
+        <Contributors />
         <WaitList />
       </AnimatedGroup>
     </main>
