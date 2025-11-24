@@ -115,6 +115,46 @@ function convertTOCToNavItems(tocItems: TOCItem[]): NavItem[] {
   return navItems;
 }
 
+function filterNavSubItems(
+  items: NavSubItem[] | undefined,
+  query: string
+): NavSubItem[] | undefined {
+  if (!items) return undefined;
+  const q = query.toLowerCase();
+
+  const filtered = items
+    .map((item) => {
+      const children = filterNavSubItems(item.children, query);
+      const titleMatch = item.title.toLowerCase().includes(q);
+      if (titleMatch || (children && children.length > 0)) {
+        return {
+          ...item,
+          children,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean) as NavSubItem[];
+  return filtered.length > 0 ? filtered : undefined;
+}
+
+function filterNavItems(navItems: NavItem[], query: string): NavItem[] {
+  const q = query.toLowerCase();
+  return navItems
+    .map((item) => {
+      const titleMatch = item.title.toLowerCase().includes(q);
+      const filteredSub = filterNavSubItems(item.items, query);
+      if (titleMatch || (filteredSub && filteredSub.length > 0)) {
+        return {
+          ...item,
+          items: filteredSub,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean) as NavItem[];
+}
+
 function renderNavSubItems(items: NavSubItem[] | undefined): React.ReactNode {
   if (!items || items.length === 0) return null;
 
@@ -194,6 +234,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [isLoading, setIsLoading] = useState(true);
   const [branches, setBranches] = useState<string[]>([]);
 
+  const [searchValue, setSearchValue] = useState("");
+
   useEffect(() => {
     if (!repositoryInfo) {
       setBranches([]);
@@ -248,6 +290,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     });
   };
 
+  const filteredNavItems =
+    searchValue && searchValue.trim().length > 0
+      ? filterNavItems(navItems, searchValue)
+      : navItems;
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -256,17 +303,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           defaultVersion={repositoryInfo?.branch || "main"}
           onVersionChange={handleBranchChange}
         />
-        <SearchForm />
+        <SearchForm search={searchValue} onSearchChange={setSearchValue} />
       </SidebarHeader>
       <SidebarContent className="gap-0 [&>div:first-child>div]:mt-0">
         {isLoading ? (
           <SidebarSkeleton />
-        ) : navItems.length === 0 ? (
+        ) : filteredNavItems.length === 0 ? (
           <div className="p-4 text-sm text-muted-foreground">
             No content available
           </div>
         ) : (
-          navItems.map((item, index) => (
+          filteredNavItems.map((item, index) => (
             <Collapsible
               key={item.title}
               title={item.title}
