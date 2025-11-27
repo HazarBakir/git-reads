@@ -234,7 +234,6 @@ export default function Page() {
   }, [repositoryInfo, showModal, setRepositoryInfo]);
 
   useEffect(() => {
-    // Removed star count fetching logic, handled in RepoStars
   }, [repositoryInfo?.owner, repositoryInfo?.repo]);
 
   useEffect(() => {
