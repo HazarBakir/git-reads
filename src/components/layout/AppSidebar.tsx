@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ArrowLeft } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import { SearchForm } from "@/components/layout/SearchForm";
 import { VersionSwitcher } from "@/components/document/VersionSwitcher";
 import {
@@ -25,6 +26,7 @@ import { useRepository } from "@/hooks/useRepository";
 import { FetchReadme, FetchBranches } from "@/lib/github";
 import { parseTOC } from "@/lib/parser";
 import { type TOCItem } from "@/types";
+import { useNavigate } from "react-router-dom";
 
 function SidebarSkeleton() {
   return (
@@ -238,6 +240,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [branches, setBranches] = useState<string[]>([]);
 
   const [searchValue, setSearchValue] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!repositoryInfo) {
@@ -301,11 +304,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <VersionSwitcher
-          versions={branches}
-          defaultVersion={repositoryInfo?.branch || "main"}
-          onVersionChange={handleBranchChange}
-        />
+        <div className="flex items-center gap-2 w-full">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => navigate("/")}
+            className="shrink-0"
+            aria-label="Back to Home"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </Button>
+          <VersionSwitcher
+            versions={branches}
+            defaultVersion={repositoryInfo?.branch || "main"}
+            onVersionChange={handleBranchChange}
+          />
+        </div>
         <SearchForm search={searchValue} onSearchChange={setSearchValue} />
       </SidebarHeader>
       <SidebarContent className="gap-0 [&>div:first-child>div]:mt-0">
