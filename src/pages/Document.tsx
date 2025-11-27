@@ -23,6 +23,7 @@ import { parseTOC } from "@/lib/parser";
 import { type TOCItem, type RepositoryInfo } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { Star } from "lucide-react";
 import {
   createSession,
   getSession,
@@ -30,6 +31,28 @@ import {
   deleteSession,
   getSessionTimeRemaining,
 } from "@/utils/sessionManager";
+
+async function fetchRepoStars(
+  owner: string,
+  repo: string
+): Promise<number | null> {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+      headers: {
+        Accept: "application/vnd.github+json",
+      },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    // handle abuse rate limits
+    if (typeof data.stargazers_count === "number") {
+      return data.stargazers_count;
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
 
 function ReadmeSkeleton() {
   return (
@@ -77,6 +100,9 @@ export default function Page() {
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
 
+  const [starCount, setStarCount] = useState<number | null>(null);
+  const [starLoading, setStarLoading] = useState(false);
+
   const contentRef = useRef<HTMLDivElement>(null);
   const activityTimerRef = useRef<number | null>(null);
   const countdownTimerRef = useRef<number | null>(null);
@@ -90,7 +116,9 @@ export default function Page() {
           setRepositoryInfo(session.repositoryInfo);
           setCurrentSessionId(sessionId);
         } else {
-          setError("Session expired or invalid. Please enter a new repository URL.");
+          setError(
+            "Session expired or invalid. Please enter a new repository URL."
+          );
           setShowModal(true);
           navigate("/document", { replace: true });
         }
@@ -98,7 +126,9 @@ export default function Page() {
     } else {
       setShowModal(true);
     }
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, [sessionId, navigate, setRepositoryInfo]);
 
   useEffect(() => {
@@ -125,7 +155,7 @@ export default function Page() {
     return () => {
       cancelled = true;
       if (countdownTimerRef.current) {
-        clearInterval(Number(countdownTimerRef.current));
+        clearInterval(countdownTimerRef.current);
       }
     };
   }, [currentSessionId, navigate]);
@@ -151,7 +181,7 @@ export default function Page() {
       updateActivity();
 
       if (activityTimerRef.current) {
-        clearTimeout(Number(activityTimerRef.current));
+        clearTimeout(activityTimerRef.current);
       }
 
       activityTimerRef.current = window.setTimeout(() => {
@@ -174,7 +204,7 @@ export default function Page() {
       window.removeEventListener("click", handleActivity);
 
       if (activityTimerRef.current) {
-        clearTimeout(Number(activityTimerRef.current));
+        clearTimeout(activityTimerRef.current);
       }
     };
   }, [currentSessionId, navigate]);
@@ -223,8 +253,28 @@ export default function Page() {
 
     loadReadme();
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [repositoryInfo, showModal, setRepositoryInfo]);
+
+  useEffect(() => {
+    async function getStarCount() {
+      if (repositoryInfo?.owner && repositoryInfo?.repo) {
+        setStarLoading(true);
+        const stars = await fetchRepoStars(
+          repositoryInfo.owner,
+          repositoryInfo.repo
+        );
+        setStarCount(stars);
+        setStarLoading(false);
+      } else {
+        setStarCount(null);
+        setStarLoading(false);
+      }
+    }
+    getStarCount();
+  }, [repositoryInfo?.owner, repositoryInfo?.repo]);
 
   useEffect(() => {
     if (!markdown || isLoading) return;
@@ -425,8 +475,8 @@ export default function Page() {
             </BreadcrumbList>
           </Breadcrumb>
           {currentSessionId && timeRemaining > 0 && (
-            <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
-              <span>Session expires in:</span>
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <span>Expires in:</span>
               <span
                 className={`font-mono ${
                   timeRemaining < 60000 ? "text-destructive" : ""
@@ -442,10 +492,36 @@ export default function Page() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="View this repository on GitHub"
-              className="ml-auto flex items-center justify-center rounded-full p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              className="ml-auto flex items-center justify-center rounded-full px-3 py-1 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
               title="View this repository on GitHub"
+              style={{ gap: 8 }}
             >
-              <GitHubLogoIcon width={24} height={24} />
+              <span className="flex items-center">
+                <span
+                  className="bg-background border border-border rounded-full px-[7px] py-px flex items-center gap-1 shadow-sm min-w-[36px] h-6 mr-1"
+                  style={{
+                    fontSize: "0.75rem",
+                    boxShadow: "0 1px 2px 0 rgba(16,30,54,.04)",
+                  }}
+                >
+                  <Star
+                    size={14}
+                    fill="currentColor"
+                    stroke="none"
+                    className="mr-1 text-yellow-400"
+                  />
+                  {starLoading ? (
+                    <span className="animate-pulse" style={{ width: 18 }}>
+                      --
+                    </span>
+                  ) : starCount !== null ? (
+                    <span>{starCount.toLocaleString()}</span>
+                  ) : (
+                    <span>--</span>
+                  )}
+                </span>
+                <GitHubLogoIcon width={24} height={24} />
+              </span>
               <span className="sr-only">View this repository on GitHub</span>
             </a>
           )}
