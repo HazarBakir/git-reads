@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { Star } from "lucide-react";
 
 async function fetchRepoStars(
@@ -6,18 +6,31 @@ async function fetchRepoStars(
   repo: string
 ): Promise<number | null> {
   try {
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-      headers: {
-        Accept: "application/vnd.github+json",
-      },
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (typeof data.stargazers_count === "number") {
-      return data.stargazers_count;
+    const response = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}`,
+      {
+        headers: {
+          Accept: "application/vnd.github.v3+json",
+          "User-Agent": "repo-stars-fetcher",
+        },
+      }
+    );
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.warn(
+        "GitHub API Error:",
+        response.status,
+        response.statusText,
+        errorData.message || ""
+      );
+      return null;
     }
-    return null;
-  } catch {
+    const data = await response.json();
+    return typeof data.stargazers_count === "number"
+      ? data.stargazers_count
+      : null;
+  } catch (error) {
+    console.error("Error fetching GitHub stars:", error);
     return null;
   }
 }
@@ -27,28 +40,48 @@ interface RepoStarsProps {
   repo?: string;
 }
 
+type State = {
+  loading: boolean;
+  stars: number | null;
+};
+
+type Action =
+  | { type: "LOADING" }
+  | { type: "LOADED"; stars: number | null }
+  | { type: "RESET" };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case "LOADING":
+      return { ...state, loading: true };
+    case "LOADED":
+      return { loading: false, stars: action.stars };
+    case "RESET":
+      return { loading: false, stars: null };
+    default:
+      return state;
+  }
+}
+
 export function RepoStars({ owner, repo }: RepoStarsProps) {
-  const [starCount, setStarCount] = useState<number | null>(null);
-  const [starLoading, setStarLoading] = useState(false);
+  const [state, dispatch] = useReducer(reducer, {
+    loading: false,
+    stars: null,
+  });
 
   useEffect(() => {
     let cancelled = false;
-
-    async function getStarCount() {
-      if (owner && repo) {
-        setStarLoading(true);
-        const stars = await fetchRepoStars(owner, repo);
-        if (!cancelled) {
-          setStarCount(stars);
-          setStarLoading(false);
-        }
-      } else {
-        setStarCount(null);
-        setStarLoading(false);
-      }
+    if (!owner || !repo) {
+      dispatch({ type: "RESET" });
+      return;
     }
+    dispatch({ type: "LOADING" });
 
-    getStarCount();
+    fetchRepoStars(owner, repo).then((stars) => {
+      if (!cancelled) {
+        dispatch({ type: "LOADED", stars });
+      }
+    });
 
     return () => {
       cancelled = true;
@@ -62,19 +95,24 @@ export function RepoStars({ owner, repo }: RepoStarsProps) {
         fontSize: "0.75rem",
         boxShadow: "0 1px 2px 0 rgba(16,30,54,.04)",
       }}
+      aria-label="GitHub stars"
+      title={
+        state.stars !== null ? `${state.stars} GitHub stars` : "GitHub stars"
+      }
     >
       <Star
         size={14}
         fill="currentColor"
         stroke="none"
         className="mr-1 text-yellow-400"
+        aria-hidden="true"
       />
-      {starLoading ? (
+      {state.loading ? (
         <span className="animate-pulse" style={{ width: 18 }}>
           --
         </span>
-      ) : starCount !== null ? (
-        <span>{starCount.toLocaleString()}</span>
+      ) : state.stars !== null ? (
+        <span>{state.stars.toLocaleString()}</span>
       ) : (
         <span>--</span>
       )}
