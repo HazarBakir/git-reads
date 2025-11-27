@@ -3,97 +3,81 @@
 <div align="center">
   <img src="public/papyr-logo-light.png" alt="GitReads Logo" width="120" />
   
-  <p align="center">
-    <strong>Discover README Files, Reimagined</strong>
-  </p>
+  <h3>Discover README Files, Reimagined</h3>
   
-  <p align="center">
-    Transform GitHub documentation into a beautifully organized reading experience
-  </p>
+  <p>Transform GitHub documentation into a beautifully organized reading experience</p>
+  
+  ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white) ![License](https://img.shields.io/badge/License-MIT-green.svg)
 </div>
 
 ---
 
-## About
+## Overview
 
-GitReads transforms GitHub README files into beautifully formatted, easy-to-navigate documentation with intelligent table of contents, advanced search, and a clean interface.
+GitReads transforms GitHub README files into beautifully formatted, easy-to-navigate documentation. Whether you're exploring open-source projects or documenting your own work, GitReads provides an elegant reading experience with intelligent navigation and powerful search capabilities.
 
 ## Features
 
-- **Smart Navigation** - Auto-generated table of contents with collapsible sections
-- **Advanced Search** - Real-time search through documentation
-- **Branch Switching** - View README files from different branches
-- **Session Management** - Secure 30-minute sessions with activity tracking
-- **Full Markdown Support** - Code highlighting, tables, images, links, and more
-- **Responsive Design** - Optimized for all devices
+| Feature | Description |
+|---------|-------------|
+| **Smart Navigation** | Auto-generated table of contents with collapsible sections for effortless browsing |
+| **Advanced Search** | Real-time search through documentation with instant results |
+| **Branch Switching** | Seamlessly view README files from any branch |
+| **Session Management** | Secure 30-minute sessions with automatic activity tracking |
+| **Full Markdown Support** | Rich rendering with code highlighting, tables, images, and links |
+| **Responsive Design** | Optimized experience across desktop, tablet, and mobile devices |
 
-## Tech Stack
-
-- React 19 + TypeScript
-- Tailwind CSS 4
-- shadcn/ui + Radix UI
-- React Router DOM
-- react-markdown with GFM support
-- Supabase (PostgreSQL)
-- Framer Motion
-- Vite
-
-## Getting Started
+## Quick Start
 
 ### Prerequisites
 
-- Node.js 20.x or higher
-- GitHub Personal Access Token (optional, for higher rate limits)
+- **Node.js** 20.x or higher
+- **npm** or **yarn**
+- **GitHub Personal Access Token** (optional, for higher API rate limits)
 
 ### Installation
 
-1. Clone and install:
+1. **Clone the repository**
 
 ```bash
 git clone https://github.com/HazarBakir/git-reads.git
 cd git-reads
+```
+
+2. **Install dependencies**
+
+```bash
 npm install
 ```
 
-2. Set up environment variables:
+3. **Configure environment variables**
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` file:
+Edit your `.env` file:
 
 ```env
-# Optional: GitHub token for higher API rate limits
-VITE_GITHUB_TOKEN=your_github_token
+# Optional: Increases GitHub API rate limits (60 → 5000 requests/hour)
+VITE_GITHUB_TOKEN=your_github_token_here
 
-# Optional: Only needed if you want to test session management locally
+# Optional: Required only for local session management testing
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-3. Run development server:
+4. **Start the development server**
 
 ```bash
 npm run dev
 ```
 
-4. Open `http://localhost:5173`
+5. **Open your browser**
 
-### Database Setup (Optional)
+Navigate to `http://localhost:5173`
 
-Most contributors don't need database access for local development. However, if you want to test session management features locally:
-
-1. Create a free account at [supabase.com](https://supabase.com)
-2. Create a new project
-3. Go to **SQL Editor** in your project dashboard
-4. Copy the contents of `database/schema.sql` and run it
-5. Get your project URL and anon key from **Project Settings → API**
-6. Add them to your `.env` file
-
-**Note**: All pull requests are automatically deployed to Vercel with full database access for testing.
-
-### Build for Production
+### Production Build
 
 ```bash
 npm run build
@@ -102,80 +86,161 @@ npm run preview
 
 ## Usage
 
-1. Enter a GitHub repository URL (e.g., `https://github.com/happyhackingspace/awesome-hackathon`)
-2. Navigate using the sidebar table of contents
-3. Search for specific content with the search bar
-4. Switch branches via the branch dropdown
+1. **Enter a repository URL**  
+   Example: `https://github.com/happyhackingspace/awesome-hackathon`
+
+2. **Navigate with ease**  
+   Use the sidebar table of contents to jump between sections
+
+3. **Search intelligently**  
+   Find specific content instantly with the search bar
+
+4. **Switch branches**  
+   View documentation from different branches using the dropdown
+
+## Tech Stack
+
+<table>
+  <tr>
+    <td><strong>Frontend</strong></td>
+    <td>React 19, TypeScript, Vite</td>
+  </tr>
+  <tr>
+    <td><strong>Styling</strong></td>
+    <td>Tailwind CSS 4, shadcn/ui, Radix UI</td>
+  </tr>
+  <tr>
+    <td><strong>Routing</strong></td>
+    <td>React Router DOM</td>
+  </tr>
+  <tr>
+    <td><strong>Markdown</strong></td>
+    <td>react-markdown with GitHub Flavored Markdown (GFM)</td>
+  </tr>
+  <tr>
+    <td><strong>Database</strong></td>
+    <td>Supabase (PostgreSQL)</td>
+  </tr>
+  <tr>
+    <td><strong>Animation</strong></td>
+    <td>Framer Motion</td>
+  </tr>
+</table>
+
+## Database Setup (Optional)
+
+> **Note**: Database setup is **required** for most contributors. Local development won't work without it in document page.
+
+If you need to test session management features locally:
+
+1. Create a free account at [supabase.com](https://supabase.com)
+2. Create a new project
+3. Navigate to **SQL Editor** in your dashboard
+4. Execute the contents of `database/schema.sql`
+5. Get your credentials from **Project Settings → API**
+6. Add them to your `.env` file
+
+**Pro tip**: All pull requests are automatically deployed to Vercel with full database access for complete feature testing!
 
 ## Contributing
 
-We welcome contributions! Here's how to get started:
+We welcome contributions! Whether it's a bug fix, new feature, or documentation improvement, your help is appreciated.
 
-### Quick Start for Contributors
+### Getting Started
 
-1. Fork the repository
-2. Create a feature branch:
+1. **Fork** the repository
+2. **Create** a feature branch
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. **Make** your changes
+4. **Commit** with clear messages
+   ```bash
+   git commit -m "Add: amazing new feature"
+   ```
+5. **Push** to your fork
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+6. **Open** a Pull Request
 
-```bash
-git checkout -b feature/your-feature-name
-```
+### Contribution Guidelines
 
-3. Make your changes
-4. Commit with clear messages:
-
-```bash
-git commit -m "Add: feature description"
-```
-
-5. Push to your fork:
-
-```bash
-git push origin feature/your-feature-name
-```
-
-6. Open a Pull Request
-
-### Development Guidelines
-
-- Follow existing code style and conventions
-- Use TypeScript with proper typing
-- Test on multiple browsers and screen sizes
-- Write clear, descriptive commit messages
-- Ensure components are accessible and responsive
+- Follow existing code style and TypeScript conventions
+- Ensure components are accessible (ARIA labels, keyboard navigation)
+- Test on multiple browsers (Chrome, Firefox, Safari)
+- Verify responsive design on various screen sizes
+- Write descriptive commit messages using prefixes:
+  - `Add:` for new features
+  - `Fix:` for bug fixes
+  - `Update:` for updates to existing features
+  - `Refactor:` for code refactoring
+  - `Docs:` for documentation changes
 
 ### Testing Your Changes
 
-**Local Testing**: Most UI/UX changes can be tested locally without database setup.
-
-**Full Feature Testing**: Push your PR to automatically deploy a preview on Vercel with complete database access. This is the recommended way to test session management and other backend features.
+| Testing Type | Method | When to Use |
+|--------------|--------|-------------|
+| **Local Testing** | Run `npm run dev` | UI/UX changes, styling, components |
+| **Full Testing** | Push PR for Vercel preview | Session management, database features, integrations |
 
 ### Project Structure
 
 ```
 git-reads/
 ├── src/
-│   ├── components/       # React components
+│   ├── components/       # Reusable React components
 │   ├── hooks/           # Custom React hooks
-│   ├── lib/             # Utilities (GitHub API, Supabase)
-│   ├── pages/           # Page components
-│   ├── types/           # TypeScript definitions
-│   └── utils/           # Helper functions
-├── database/            # Database schema
-└── public/              # Static assets
+│   ├── lib/             # External service integrations (GitHub, Supabase)
+│   ├── pages/           # Route page components
+│   ├── types/           # TypeScript type definitions
+│   └── utils/           # Helper functions and utilities
+├── database/            # Database schema and migrations
+├── public/              # Static assets (images, icons)
+└── ...config files
 ```
+
+## Troubleshooting
+
+<details>
+<summary><strong>API rate limit exceeded</strong></summary>
+
+- Add a GitHub Personal Access Token to your `.env` file
+- Create one at [github.com/settings/tokens](https://github.com/settings/tokens)
+- Requires only public repository read access
+</details>
+
+<details>
+<summary><strong>Port 5173 already in use</strong></summary>
+
+- Kill the process: `lsof -ti:5173 | xargs kill -9` (macOS/Linux)
+- Or change the port in `vite.config.ts`
+</details>
+
+<details>
+<summary><strong>Module not found errors</strong></summary>
+
+- Delete `node_modules` and reinstall: `rm -rf node_modules && npm install`
+- Clear npm cache: `npm cache clean --force`
+</details>
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Links
 
-- **Repository**: [github.com/HazarBakir/git-reads](https://github.com/HazarBakir/git-reads)
-- **Issues**: [github.com/HazarBakir/git-reads/issues](https://github.com/HazarBakir/git-reads/issues)
-- **Pull Requests**: [github.com/HazarBakir/git-reads/pulls](https://github.com/HazarBakir/git-reads/pulls)
+- **Issues**: [Report a bug](https://github.com/HazarBakir/git-reads/issues)
+- **Pull Requests**: [Contribute code](https://github.com/HazarBakir/git-reads/pulls)
+- **Discussions**: [Join the conversation](https://github.com/HazarBakir/git-reads/discussions)
+
+## Acknowledgments
+
+Built with love for the open-source community. Special thanks to all contributors who help make GitReads better! ❤️
 
 ---
 
 <div align="center">
-  <p> Made with ❤️ </p>
+  <p><strong>Made with ❤️</strong></p>
+  <p>Star us on GitHub if you find this project helpful!</p>
 </div>
