@@ -30,7 +30,7 @@ import {
   deleteSession,
   getSessionTimeRemaining,
 } from "@/utils/sessionManager";
-import { RepoStars } from "@/components/document/FetchRepoStars";
+import { RepoStars } from "@/utils/FetchRepoStars";
 
 function ReadmeSkeleton() {
   return (
