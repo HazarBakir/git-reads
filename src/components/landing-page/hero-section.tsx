@@ -40,7 +40,8 @@ export default function HeroSection() {
                   as="p"
                   className="mt-8 max-w-2xl text-pretty text-lg"
                 >
-                  GitReads transforms ordinary GitHub documentation into an inviting, beautifully organized reading experience. Instantly dive into any repositories' README, enjoy seamless navigation across sections, and find what you need without the clutter. It is documentation, but actually pleasant—and unmistakably yours to explore.
+                  Transform GitHub documentation into an inviting, beautifully
+                  organized reading experience.
                 </TextEffect>
 
                 <div className="flex w-full max-w-xl items-center gap-2 mt-12">
