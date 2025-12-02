@@ -87,7 +87,7 @@ export default function Document() {
 
   const { handleHighlight, reloadHighlights } = useHighlights(
     currentSessionId,
-    contentRef
+    contentRef as React.RefObject<HTMLDivElement>
   );
 
   useEffect(() => {
