@@ -95,7 +95,7 @@ export function DocumentMarkdown({ chunks, pageIndex, onPageChange }: Props) {
     return <div className="text-destructive p-4">Invalid repository information</div>
 
   return (
-    <div className="document-markdown w-full max-w-4xl mx-auto px-2 sm:px-4 [&>h1:first-child]:mt-0 [&>h2:first-child]:mt-0 [&>h3:first-child]:mt-0 [&>h4:first-child]:mt-0 [&>h5:first-child]:mt-0 [&>h6:first-child]:mt-0">
+    <div key={safePageIndex} className="document-markdown w-full max-w-4xl mx-auto px-2 sm:px-4 [&>h1:first-child]:mt-0 [&>h2:first-child]:mt-0 [&>h3:first-child]:mt-0 [&>h4:first-child]:mt-0 [&>h5:first-child]:mt-0 [&>h6:first-child]:mt-0">
       {chunks.length > 1 && (
         <PaginationNav idx={safePageIndex} setIdx={setIdx} total={chunks.length} />
       )}

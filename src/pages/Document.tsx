@@ -18,6 +18,7 @@ import { splitMarkdown } from "@/lib/markdown/utils/split";
 import { createSession, getSession, deleteSession, getSessionTimeRemaining } from "@/lib/session";
 import type { TOCItem, RepositoryInfo } from "@/types";
 import type { Highlight } from "@/types/highlight";
+import HighlightsFAB from "../components/highlights/HighlightsFAB";
 
 function ReadmeSkeleton() {
   return (
@@ -434,46 +435,12 @@ export default function Document() {
           )}
         </div>
         {allHighlights.length > 0 && (
-          <div className="fixed right-3 bottom-3 z-20 w-72 max-h-[60vh] rounded-md border bg-background shadow-lg overflow-hidden">
-            <div className="flex items-center justify-between px-3 py-2 border-b">
-              <p className="text-sm font-semibold">Highlights</p>
-              <span className="text-xs text-muted-foreground">
-                Page {pageIndex + 1}/{highlightPageCount}
-              </span>
-            </div>
-            <div className="max-h-[50vh] overflow-y-auto">
-              {allHighlights.map((highlight) => (
-                <button
-                  key={highlight.id}
-                  type="button"
-                  className="w-full text-left px-3 py-2 hover:bg-accent focus:bg-accent focus:outline-none"
-                  onClick={() => navigateToHighlight(highlight)}
-                >
-                  <div className="flex items-start gap-2">
-                    <span
-                      className="mt-1 inline-block h-3 w-3 rounded-full border"
-                      style={{ backgroundColor: highlight.color }}
-                    />
-                    <div>
-                      <p className="text-xs text-muted-foreground">
-                        Page{" "}
-                        {Math.min(
-                          (highlight.container_xpath?.match(/page:(\d+)/)?.[1]
-                            ? parseInt(
-                                highlight.container_xpath?.match(/page:(\d+)/)?.[1] ?? "0",
-                                10
-                              ) + 1
-                            : 1),
-                          highlightPageCount
-                        )}
-                      </p>
-                      <p className="text-sm line-clamp-2">{highlight.text_content}</p>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
+          <HighlightsFAB
+            allHighlights={allHighlights}
+            pageIndex={pageIndex}
+            highlightPageCount={highlightPageCount}
+            navigateToHighlight={navigateToHighlight}
+          />
         )}
       </SidebarInset>
     </SidebarProvider>
