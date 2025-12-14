@@ -319,5 +319,5 @@ Built with dedication for the open-source community. Special thanks to all contr
 ---
 
 <div align="center">
-  <p>Star us on GitHub if you find this project helpful</p>
+  <p>Made with ❤️ by HappyHackingSpace </p>
 </div>
